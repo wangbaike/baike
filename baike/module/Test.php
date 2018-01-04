@@ -23,10 +23,10 @@ class Test {
     }
 
     private static function fcTest() {
-//        $url = 'https://weixin.huitour.cn/hcfangche/index.php/wxapp/lines/?';
-//        $result = NetTools::httpBuild($url, array('method' => 'lines.detail'), array('price_type_id' => 5));
-//        var_dump($result);
-//        print_r(json_decode($result, true));
+        $url = 'https://weixin.huitour.cn/hcfangche/index.php/wxapp/lines/?';
+        $result = NetTools::httpBuild($url, array('method' => 'lines.date'), array('price_type_id' => 7, 'login_key' => '944a2914b092ce2e34764313b555d9ce'));
+        var_dump($result);
+        print_r(json_decode($result, true));
     }
 
 }
