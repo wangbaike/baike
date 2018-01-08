@@ -23,8 +23,16 @@ class Test {
     }
 
     private static function fcTest() {
-        $url = 'https://weixin.huitour.cn/hcfangche/index.php/wxapp/lines/?';
-        $result = NetTools::httpBuild($url, array('method' => 'lines.date'), array('price_type_id' => 7, 'login_key' => '944a2914b092ce2e34764313b555d9ce'));
+        exit;
+        $url = 'https://weixin.huitour.cn/hcfangche/index.php/wxapp/admin/?';
+        $result = NetTools::httpBuild($url, array('method' => 'price_type.add_price'), array(
+                    'price_type_id' => 7,
+                    'name' => '预付定金可享5000优惠',
+                    'remark' => '1. 支付成功，可享受福建全景八日游5000元现金优惠。<br/>2.以5人/车18800为例，立减5000，优惠价13800，余款需支付11800元',
+                    'price' => 2000,
+                    'start_time' => '2018-01-20',
+                    'end_time' => '2018-01-27',
+                    'total_num' => 10));
         var_dump($result);
         print_r(json_decode($result, true));
     }
