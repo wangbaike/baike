@@ -29,7 +29,7 @@ class UrlPath {
      * @return string
      */
     public static function siteUrl($urlParam = '') {
-        return self::baseUrl(Config::$indexPage . ($urlParam ? '/' . $urlParam : ''));
+        return self::baseUrl(Config::getInstance()->getIndexPage() . ($urlParam ? '/' . $urlParam : ''));
     }
 
     /**
@@ -41,7 +41,7 @@ class UrlPath {
     public static function baseUrl($urlParam = '') {
         $server = InputParam::server();
         $http = $server['SERVER_PORT'] == '443' ? 'https://' : 'http://';
-        return $http . $server['HTTP_HOST'] . str_ireplace(Config::$indexPage, '', $server['SCRIPT_NAME']) . $urlParam;
+        return $http . $server['HTTP_HOST'] . str_ireplace(Config::getInstance()->getIndexPage(), '', $server['SCRIPT_NAME']) . $urlParam;
     }
 
 }

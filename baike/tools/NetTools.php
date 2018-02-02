@@ -57,6 +57,44 @@ class NetTools {
     }
 
     /**
+     * 以post方式提交请求
+     * 
+     * @param string $url
+     * @param array|string $data
+     * @return bool|mixed
+     */
+    public static function httpPost($url, $data) {
+        $curl = curl_init();
+        curl_setopt($curl, CURLOPT_URL, $url);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curl, CURLOPT_HEADER, false);
+        curl_setopt($curl, CURLOPT_POST, true);
+        curl_setopt($curl, CURLOPT_POSTFIELDS, self::_buildPost($data));
+        list($content, $status) = array(curl_exec($curl), curl_getinfo($curl), curl_close($curl));
+        return (intval($status["http_code"]) === 200) ? $content : false;
+    }
+
+    /**
+     * POST数据过滤处理
+     * 
+     * @param array $data
+     * @return array
+     */
+    static private function _buildPost(&$data) {
+        if (is_array($data)) {
+            foreach ($data as &$value) {
+                if (is_string($value) && $value[0] === '@' && class_exists('CURLFile', false)) {
+                    $filename = realpath(trim($value, '@'));
+                    file_exists($filename) && $value = new CURLFile($filename);
+                }
+            }
+        }
+        return $data;
+    }
+
+    /**
      * 建立socket连接
      * 
      * @param string $urlStr 地址，可以带端口

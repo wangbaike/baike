@@ -7,7 +7,7 @@ use baike\libs\DataModel;
 use baike\tools\InputParam;
 use baike\tools\UrlPath;
 use baike\tools\NetTools;
-use baike\tools\Functions;
+use baike\tools\Func;
 
 /**
  * Description of Qiubai
@@ -74,12 +74,12 @@ class Qiubai {
                 //年龄
                 $regename = "/<i class=\"age\">.*?<\/i>/ism";
                 if (preg_match($regename, $matchesV, $matchesname)) {
-                    $singleArr['age'] = Functions::filterHtml($matchesname['0']);
+                    $singleArr['age'] = Func::filterHtml($matchesname['0']);
                 }
                 //内容
                 $regename = "/<a href=\"\/article\/.*?<\/a>/ism";
                 if (preg_match($regename, $matchesV, $matchesname)) {
-                    $singleArr['content'] = Functions::filterHtml($matchesname['0']);
+                    $singleArr['content'] = Func::filterHtml($matchesname['0']);
                 }
                 //来源地址
                 $regename = "/\"\/article\/.*?class=\"text\"/ism";

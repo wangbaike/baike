@@ -24,6 +24,38 @@ class Config {
      * 默认为 index.php
      * @var type 
      */
-    public static $indexPage = 'index.php';
+    private $indexPage = 'index.php';
+    private $viewDir = 'view';
+    private static $_INSTANCE = null; //实例化
+
+    /**
+     * 实例化本类
+     * 
+     * @return type
+     */
+
+    public static function getInstance() {
+        if (self::$_INSTANCE === null) {
+            self::$_INSTANCE = new Config();
+        }
+        return self::$_INSTANCE;
+    }
+
+    /**
+     * 返回入口文件
+     * 
+     * @return type
+     */
+    public function getIndexPage() {
+        return $this->indexPage;
+    }
+
+    /**
+     * 获取模板文件夹名称
+     * @return type
+     */
+    public function getViewDir() {
+        return $this->viewDir;
+    }
 
 }

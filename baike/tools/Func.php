@@ -17,7 +17,7 @@ namespace baike\tools;
 /**
  * Description of Functions
  */
-class Functions {
+class Func {
 
     /**
      * 截取字符串
