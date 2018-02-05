@@ -8,28 +8,36 @@
 
 namespace baike;
 
-use baike\libs\BaiException;
-use baike\module;
-use baike\tools\InputParam;
+use baike\controller; //加载控制器内类
+use baike\tools\InputParam; //全局输入加载
+use baike\configs\Errcode; //加载异常代码库
+use baike\libs\BaiException; //加载异常类
+
+session_start();
 
 class Init {
 
     public static function main() {
         try {
-            header("Content-type: text/html; charset=utf-8");
+            //header("Content-type: text/html; charset=utf-8");
             switch (self::getPathName()) {
                 //糗百视频采集模块
                 case 'qiubai':
-                    module\Qiubai::main();
+                    controller\Qiubai::main();
                     break;
                 //测试模块
                 case 'test':
-                    module\Test::main();
+                    controller\Test::main();
+                    break;
+                //微信模块
+                case 'wx':
+                    controller\Weixinrobot::main();
                     break;
                 default:
-                    throw new BaiException('404 Not found page');
+                    throw new BaiException(Errcode::$pageNotFind);
             }
         } catch (BaiException $exc) {
+            header("Content-type: text/html; charset=utf-8");
             echo implode('<br/>', get_included_files());
             echo '<br/><br/>' . $exc->getMessage();
         }

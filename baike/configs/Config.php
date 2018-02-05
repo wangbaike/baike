@@ -21,11 +21,25 @@ class Config {
 
     /**
      * 网站入口文件，可以为空
+     * 
      * 默认为 index.php
      * @var type 
      */
     private $indexPage = 'index.php';
+
+    /**
+     * 模板文件夹名称
+     * 
+     * @var type 
+     */
     private $viewDir = 'view';
+
+    /**
+     * 附件文件夹名称
+     * 
+     * @var type 
+     */
+    private $assetsDir = 'assets';
     private static $_INSTANCE = null; //实例化
 
     /**
@@ -52,10 +66,20 @@ class Config {
 
     /**
      * 获取模板文件夹名称
+     * 
      * @return type
      */
     public function getViewDir() {
         return $this->viewDir;
+    }
+
+    /**
+     * 获取附件文件夹名称
+     * 
+     * @return type
+     */
+    public function getAssetsDir() {
+        return $this->assetsDir;
     }
 
 }

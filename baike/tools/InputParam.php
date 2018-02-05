@@ -86,4 +86,32 @@ class InputParam {
         }
     }
 
+    /**
+     * 设置SESSION值
+     * 
+     * @param type $key
+     * @param type $value
+     * @return type
+     */
+    public static function set_session($key, $value = '') {
+        if (!is_array($key)) {
+            $key = array($key => $value);
+        }
+        foreach ($key as $keyIndex => $keyItem) {
+            $_SESSION[$keyIndex] = $keyItem;
+        }
+        return true;
+    }
+
+    /**
+     * 设置SESSION值
+     * 
+     * @param type $key
+     * @param type $value
+     * @return type
+     */
+    public static function set_cookie($key, $value = '') {
+        
+    }
+
 }

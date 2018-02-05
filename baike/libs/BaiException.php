@@ -8,11 +8,14 @@
 
 namespace baike\libs;
 
+use baike\configs\Errcode; //加载错误代码库
+
 /**
  * Description of exception
  *
  * @author Administrator
  */
+
 class BaiException extends \Exception {
 
     private $details = array();

@@ -15,7 +15,13 @@ error_reporting(E_ALL);
  * 定义当前系统路径
  */
 define('APP_PATH', dirname(__FILE__) . DIRECTORY_SEPARATOR);
-
+/**
+ * 定义系统文件夹路径
+ */
+define('SYS_PATH', dirname(__FILE__) . DIRECTORY_SEPARATOR . 'baike' . DIRECTORY_SEPARATOR);
+/**
+ * 初始化系统
+ */
 Init::main();
 
 

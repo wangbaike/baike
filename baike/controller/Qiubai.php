@@ -1,6 +1,6 @@
 <?php
 
-namespace baike\module;
+namespace baike\controller;
 
 use baike\libs\BaiException;
 use baike\libs\DataModel;
