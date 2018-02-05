@@ -44,12 +44,10 @@ use baike\tools\InputParam;
             function getQr() {
                 //获取uuid
                 $.getJSON('<?php echo UrlPath::siteUrl('wx?a=get_uuid') ?>', function (result) {
-                    //获取二维码地址
-                    $.getJSON('<?php echo UrlPath::siteUrl('wx?a=get_qrcode') ?>', function (result_1) {
-                        $('.qr_show').html('<img src="' + result_1.data.url + '" width="150" height="150">');
-                        $('.msg').html('请扫描二维码并点击确认');
-                        loginCheck();
-                    });
+                    //显示扫描二维码
+                    $('.qr_show').html('<img src="https://login.weixin.qq.com/qrcode/' + result.data + '?t=webwx" width="150" height="150">');
+                    $('.msg').html('请扫描二维码并点击确认');
+                    loginCheck();
                 });
             }
             //检测扫码状态
@@ -88,13 +86,28 @@ use baike\tools\InputParam;
                 $('.msg').html('初始化页面');
                 $.getJSON('<?php echo UrlPath::siteUrl('wx?a=get_login_init') ?>', function (result_4) {
                     $('.msg').html('初始化完成');
+                    //location.reload();
+                });
+            }
+            //心跳检测
+            var timer = 0;
+            function synccheck() {
+                $.getJSON('<?php echo UrlPath::siteUrl('wx?a=get_synccheck') ?>', function (result_5) {
+                    $('.msg').html('心跳检测：' + timer);
+                    if (result_5.data.ret === '0') {
+                        timer++;
+                        $('.msg').html('心跳检测：' + timer);
+                    } else {
+                        //alert('登录失败');
+                    }
                 });
             }
             $(function () {
-<?php if (InputParam::session('post') === false): ?>
+<?php if (!$isLogin): ?>
                     getQr();
 <?php else: ?>
                     loginInit();
+                    setInterval('synccheck()', 10000);
 <?php endif; ?>
             });
         </script>
@@ -102,7 +115,7 @@ use baike\tools\InputParam;
     <body>
         <div class="qr_show"></div>
         <div class="msg"></div>
-        <?php print_r(InputParam::session()) ?>
+        <?php print_r($json) ?>
     </body>
 </html>
 

@@ -223,6 +223,7 @@ class WeixinWebApi {
         if (!$SyncKey['List']) {
             $SyncKey = $_SESSION['json']['SyncKey'];
         }
+        $SyncKey_value = '';
         foreach ($SyncKey['List'] as $key => $value) {
             if ($key == 1) {
                 $SyncKey_value = $value['Key'] . '_' . $value['Val'];
@@ -231,9 +232,10 @@ class WeixinWebApi {
             }
         }
         $header = array(
-            '0' => 'https://webpush.wx2.qq.com',
+            //'0' => 'https://webpush.wx2.qq.com',
             '1' => 'https://webpush.wx.qq.com',
         );
+        $data = array();
         foreach ($header as $key => $value) {
             $url = $value . "/cgi-bin/mmwebwx-bin/synccheck?r=" . $this->getMillisecond() . "&skey=" . urlencode($post->skey) . "&sid=" . $post->sid . "&deviceid=" . $post->BaseRequest['DeviceID'] . "&uin=" . $post->uin . "&synckey=" . urlencode($SyncKey_value) . "&_=" . $this->getMillisecond();
             $data[] = $this->curlPost($url);
@@ -241,10 +243,11 @@ class WeixinWebApi {
         foreach ($data as $k => $val) {
             $rule = '/window.synccheck={retcode:"(\d+)",selector:"(\d+)"}/';
             preg_match($rule, $data[$k], $match);
-            if ($match[1] == '0') {
-                $retcode = $match[1];
-                $selector = $match[2];
-            }
+            //print_r($match);
+            //if ($match[1] == '0') {
+            $retcode = $match[1];
+            $selector = $match[2];
+            // }
         }
 
         $status = array(
