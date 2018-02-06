@@ -39,24 +39,6 @@ class Weixinrobot {
                 $result = $robot->login(InputParam::session('uuid'));
                 echo OutputParam::jsonRight($result);
                 break;
-            /**
-             * 登录确认后操作
-             * 
-             * "data":{
-             * "post_url_header":"https:\/\/wx.qq.com\/cgi-bin\/mmwebwx-bin",
-             * "post":{
-             *      "BaseRequest":{
-             *          "Uin":"276036175",
-             *          "Sid":"49CdJjISVmJNVxdx",
-             *          "Skey":"@crypt_76d3bfc0_9dd019e237818756f1aea47cacf678f2",
-             *          "DeviceID":"e962976072911621"
-             *         },
-             * "skey":"@crypt_76d3bfc0_9dd019e237818756f1aea47cacf678f2",
-             * "pass_ticket":"SkUWlxjGB%2FBGJcdm24GEmHs1LJnPUj7C28W3S9EF%2B2A15ts6DnFsnvFUayyeLlTb",
-             * "sid":"49CdJjISVmJNVxdx",
-             * "uin":"276036175"
-             * }}
-             */
             case 'get_login_done'://登陆后操作
                 $callback = $robot->get_uri(InputParam::session('uuid'));
                 //格式化后获取post数据
@@ -86,7 +68,8 @@ class Weixinrobot {
             default:
                 $userName = '百科';
                 $json = InputParam::session('json');
-                $jsonArr = json_decode($json, true);print_r($jsonArr['SyncKey']);
+                $jsonArr = json_decode($json, true);
+                print_r($jsonArr['SyncKey']);
                 $isLogin = 0;
                 //var_dump($jsonArr['BaseResponse']['Ret']);
                 if ($jsonArr['BaseResponse']['Ret'] === 0) {

@@ -93,10 +93,11 @@ use baike\tools\InputParam;
             var timer = 0;
             function synccheck() {
                 $.getJSON('<?php echo UrlPath::siteUrl('wx?a=get_synccheck') ?>', function (result_5) {
+                    setTimeout('synccheck()', 5000);
                     $('.msg').html('心跳检测：' + timer);
                     if (result_5.data.ret === '0') {
                         timer++;
-                        $('.msg').html('心跳检测：' + timer);
+                        $('.msg').html('心跳检测：ret' + result_5.data.ret + ' selector:'+result_5.data.ret);
                     } else {
                         //alert('登录失败');
                     }
@@ -107,7 +108,6 @@ use baike\tools\InputParam;
                     getQr();
 <?php else: ?>
                     loginInit();
-                    setInterval('synccheck()', 10000);
 <?php endif; ?>
             });
         </script>
