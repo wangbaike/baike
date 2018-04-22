@@ -14,7 +14,16 @@
 
 namespace baike\tools;
 
-class InputParam {
+class InputParam
+{
+
+    /**
+     * 单例封装
+     */
+    private function __construct()
+    {
+        
+    }
 
     /**
      * 获取GET值
@@ -22,7 +31,8 @@ class InputParam {
      * @param string $param 索引值，空可以返回全部GET数组
      * @return false | value | array
      */
-    public static function get($param = '') {
+    public static function get($param = '')
+    {
         if ($param == '') {
             return !empty($_GET) ? $_GET : false;
         } else {
@@ -36,7 +46,8 @@ class InputParam {
      * @param string $param 索引值，空可以返回全部POST数组
      * @return false | value | array
      */
-    public static function post($param = '') {
+    public static function post($param = '')
+    {
         if ($param == '') {
             return !empty($_POST) ? $_POST : false;
         } else {
@@ -50,7 +61,8 @@ class InputParam {
      * @param string $param 索引值，空可以返回全部SERVER数组
      * @return false | value | array
      */
-    public static function server($param = '') {
+    public static function server($param = '')
+    {
         if ($param == '') {
             return !empty($_SERVER) ? $_SERVER : false;
         } else {
@@ -64,7 +76,8 @@ class InputParam {
      * @param string $param 索引值，空可以返回全部COOKIE数组
      * @return false | value | array
      */
-    public static function cookie($param = '') {
+    public static function cookie($param = '')
+    {
         if ($param == '') {
             return !empty($_COOKIE) ? $_COOKIE : false;
         } else {
@@ -78,7 +91,8 @@ class InputParam {
      * @param string $param 索引值，空可以返回全部SESSION数组
      * @return false | value | array
      */
-    public static function session($param = '') {
+    public static function session($param = '')
+    {
         if ($param == '') {
             return !empty($_SESSION) ? $_SESSION : false;
         } else {
@@ -93,7 +107,8 @@ class InputParam {
      * @param type $value
      * @return type
      */
-    public static function set_session($key, $value = '') {
+    public static function set_session($key, $value = '')
+    {
         if (!is_array($key)) {
             $key = array($key => $value);
         }
@@ -110,7 +125,8 @@ class InputParam {
      * @param type $value
      * @return type
      */
-    public static function set_cookie($key, $value = '') {
+    public static function set_cookie($key, $value = '')
+    {
         
     }
 

@@ -3,7 +3,7 @@
 namespace baike\controller;
 
 use baike\libs\BaiException;
-use baike\libs\DataModel;
+use baike\model\DataModel;
 use baike\tools\InputParam;
 use baike\tools\UrlPath;
 use baike\tools\NetTools;

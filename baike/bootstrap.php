@@ -1,6 +1,7 @@
 <?php
 
-function BaikeClassLoader($class) {
+function BaikeClassLoader($class)
+{
     if (0 === stripos($class, 'baike\\')) {
         $path = str_replace('baike\\', '\\', $class);
         $path = str_replace('\\', DIRECTORY_SEPARATOR, $path);

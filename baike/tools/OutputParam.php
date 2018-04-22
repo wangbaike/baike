@@ -17,16 +17,26 @@ namespace baike\tools;
 use baike\configs\Errcode; //加载异常代码库
 use baike\libs\BaiException; //加载异常类
 
-class OutputParam {
+class OutputParam
+{
 
     private static $_INSTANCE = null;
+
+    /**
+     * 单例封装
+     */
+    private function __construct()
+    {
+        
+    }
 
     /**
      * 实例化对象
      * 
      * @return type
      */
-    private static function getInstance() {
+    private static function getInstance()
+    {
         if (self::$_INSTANCE == null) {
             self::$_INSTANCE = new OutputParam();
         }
@@ -39,7 +49,8 @@ class OutputParam {
      * @param type $data
      * @return type
      */
-    public static function jsonRight($data) {
+    public static function jsonRight($data)
+    {
         return self::getInstance()->outJson(array('err_code' => 0, 'data' => $data, 'msg' => ''));
     }
 
@@ -50,7 +61,8 @@ class OutputParam {
      * @param type $errMsg 错误信息
      * @return type
      */
-    public static function jsonError($errCode, $errMsg = '') {
+    public static function jsonError($errCode, $errMsg = '')
+    {
         return self::getInstance()->outJson(array('err_code' => $errCode, 'data' => array(), 'msg' => $errMsg));
     }
 
@@ -61,7 +73,8 @@ class OutputParam {
      * @return type
      * @throws BaiException
      */
-    private function outJson($data = array()) {
+    private function outJson($data = array())
+    {
         if (!is_array($data)) {
             throw new BaiException(Errcode::$dataNotArray);
         }

@@ -36,6 +36,17 @@ class Database {
         $database[$dbIndex]['dbPwd'] = '91f642a0cff440b3b947c3373dff5f69';
         $database[$dbIndex]['dbCharset'] = 'utf8';
         $database[$dbIndex]['dbPrev'] = 'bk_';
+
+        //本地数据库
+        $dbIndex ++;
+        $database = array();
+        $database[$dbIndex]['dbHost'] = 'localhost';
+        $database[$dbIndex]['dbPort'] = 3306;
+        $database[$dbIndex]['dbName'] = 'tongji';
+        $database[$dbIndex]['dbUser'] = 'root';
+        $database[$dbIndex]['dbPwd'] = 'root';
+        $database[$dbIndex]['dbCharset'] = 'utf8';
+        $database[$dbIndex]['dbPrev'] = '';
         return $database;
     }
 

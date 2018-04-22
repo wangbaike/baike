@@ -47,7 +47,7 @@ class View {
         if (!is_array($param)) {
             throw new BaiException(Errcode::$paramViewTypeError);
         }
-        $file_path = SYS_PATH . Config::getInstance()->getViewDir() . DIRECTORY_SEPARATOR . $tplName . '.' . $ext;
+        $file_path = BASE_PATH . Config::getInstance()->getViewDir() . DIRECTORY_SEPARATOR . $tplName . '.' . $ext;
         if (file_exists($file_path)) {
             extract($param);
             include $file_path;

@@ -14,7 +14,8 @@
 
 namespace baike\configs;
 
-class Errcode {
+class Errcode
+{
 
     /**
      * 加载|模板文件找不到
@@ -45,5 +46,17 @@ class Errcode {
      * @var array 
      */
     public static $dataNotArray = array('code' => 1501, 'message' => '参数类型应是数组');
+
+    /**
+     * 加载文件|找不到对应的控制器
+     * @var array 
+     */
+    public static $classNotFind = array('code' => 1601, 'message' => '找不到对应的控制器');
+
+    /**
+     * 加载文件|找不到控制器对应的执行方法
+     * @var array 
+     */
+    public static $methodNotFind = array('code' => 1602, 'message' => '找不到控制器对应的执行方法');
 
 }

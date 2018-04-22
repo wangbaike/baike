@@ -1,6 +1,6 @@
 <?php
 
-namespace baike\libs;
+namespace baike\model;
 
 use baike\libs\database\DBLoader;
 use baike\tools\InputParam;
@@ -22,7 +22,7 @@ class DataModel extends DBLoader {
     private static $instanceCache = array();
 
     //构造函数
-    public function __construct($tableName, $dbIndex = 0) {
+    public function __construct($tableName, $dbIndex = 2) {
         //自动连接bae数据库
         if ('bae' == InputParam::server('USER')) {
             $dbIndex = 1;
