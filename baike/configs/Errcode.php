@@ -59,4 +59,10 @@ class Errcode
      */
     public static $methodNotFind = array('code' => 1602, 'message' => '找不到控制器对应的执行方法');
 
+    /**
+     * 加载文件|找不到文件
+     * @var array 
+     */
+    public static $fileNotFind = array('code' => 1701, 'message' => '找不到文件');
+
 }

@@ -47,7 +47,7 @@ class View {
         if (!is_array($param)) {
             throw new BaiException(Errcode::$paramViewTypeError);
         }
-        $file_path = BASE_PATH . Config::getInstance()->getViewDir() . DIRECTORY_SEPARATOR . $tplName . '.' . $ext;
+        $file_path = APP_PATH . Config::getInstance()->getViewDir() . DIRECTORY_SEPARATOR . $tplName . '.' . $ext;
         if (file_exists($file_path)) {
             extract($param);
             include $file_path;
@@ -105,7 +105,7 @@ class View {
                     $fileNameVal = $ext . DIRECTORY_SEPARATOR . $fileNameVal;
                 }
                 $file_path = Config::getInstance()->getAssetsDir() . DIRECTORY_SEPARATOR . $fileNameVal . ($ext ? '.' . $ext : '');
-                $local_path = APP_PATH . $file_path;
+                $local_path = WEB_PATH . $file_path;
                 if (file_exists($local_path)) {
                     switch ($ext) {
                         case 'css':

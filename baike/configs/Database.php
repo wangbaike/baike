@@ -39,7 +39,6 @@ class Database {
 
         //本地数据库
         $dbIndex ++;
-        $database = array();
         $database[$dbIndex]['dbHost'] = 'localhost';
         $database[$dbIndex]['dbPort'] = 3306;
         $database[$dbIndex]['dbName'] = 'tongji';

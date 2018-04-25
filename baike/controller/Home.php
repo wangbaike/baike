@@ -7,7 +7,9 @@
  */
 
 namespace baike\controller;
+
 use baike\tools\InputParam;
+use baike\tools\View;
 
 /**
  * Description of Home
@@ -19,9 +21,7 @@ class Home
 
     public function index()
     {
-        echo 'Hello word !';
-        $pathInfo = InputParam::get();
-        print_r($pathInfo);
+        View::load('home');
     }
 
 }

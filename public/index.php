@@ -6,13 +6,13 @@ header("Content-type: text/html; charset=utf-8");
  */
 error_reporting(E_ALL);
 /**
- * 定义框架程序路径
+ * 定义前端路径
  */
-define('BASE_PATH', dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR);
+define('WEB_PATH', dirname(__FILE__) . DIRECTORY_SEPARATOR);
 /**
- * 定义系统根路径
+ * 定义程序目录
  */
-define('APP_PATH', BASE_PATH . DIRECTORY_SEPARATOR . 'baike' . DIRECTORY_SEPARATOR);
+define('APP_PATH', dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'baike' . DIRECTORY_SEPARATOR);
 /**
  * 加载全局脚本
  */
