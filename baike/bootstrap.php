@@ -1,6 +1,6 @@
 <?php
 
-function BaikeClassLoader($class)
+function baikeClassLoader($class)
 {
     if (0 === stripos($class, 'baike\\')) {
         $path = str_replace('baike\\', '\\', $class);
@@ -20,4 +20,4 @@ function BaikeClassLoader($class)
     }
 }
 
-spl_autoload_register('BaikeClassLoader');
+spl_autoload_register('baikeClassLoader');
