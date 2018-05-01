@@ -1,24 +1,8 @@
-<?php
-
-use baike\tools\View;
-
-/**
- * This Tpl designed by wbk
- *
- * contact me by email with wangbaike168@qq.com if you have any question, good luck with you !
- *
- * @filename           wxweb.php
- * @package		Netbeans 8.0.2
- * @author		Administrator
- * @link		http://www.baikeshuo.cn
- * @datetime          2018-2-5 9:57:23
- */
-?>
 <!doctype html>
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
         <meta charset="utf-8" />
-        <title>Hello World !</title>
+        <title>404页面找不到</title>
         <meta content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1, maximum-scale=1" name="viewport" />
         <meta name="format-detection" content="telephone=no, email=no" />
         <meta name="apple-mobile-web-app-status-bar-style" content="white" />
@@ -35,10 +19,7 @@ use baike\tools\View;
         <meta name="x5-page-mode" content="app" />
         <meta name="keywords" content="" />
         <meta name="description" content="" />
-        <?php View::loadJs('jquery-3.3.1.min'); ?>
     </head>
-    <body>
-        Hello World !
-    </body>
+    <body>404 请求的页面不存在！</body>
 </html>
 

@@ -51,7 +51,7 @@ class OutputParam
      */
     public static function jsonRight($data)
     {
-        return self::getInstance()->outJson(array('err_code' => 0, 'data' => $data, 'msg' => ''));
+        return self::getInstance()->outJson(array('errcode' => 0, 'data' => $data, 'msg' => ''));
     }
 
     /**
@@ -63,7 +63,7 @@ class OutputParam
      */
     public static function jsonError($errCode, $errMsg = '')
     {
-        return self::getInstance()->outJson(array('err_code' => $errCode, 'data' => array(), 'msg' => $errMsg));
+        return self::getInstance()->outJson(array('errcode' => $errCode, 'data' => array(), 'msg' => $errMsg));
     }
 
     /**

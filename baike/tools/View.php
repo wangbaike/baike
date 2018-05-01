@@ -19,7 +19,8 @@ use baike\configs\Errcode; //加载异常代码库
 use baike\libs\BaiException; //加载异常类
 use baike\tools\UrlPath; //加载路径
 
-class View {
+class View
+{
 
     private static $_INSTANCE = null;
 
@@ -28,7 +29,8 @@ class View {
      * 
      * @return type
      */
-    private static function getInstance() {
+    private static function getInstance()
+    {
         if (self::$_INSTANCE == null) {
             self::$_INSTANCE = new View();
         }
@@ -43,7 +45,8 @@ class View {
      * @param type $ext 文件后缀名，不带“.”
      * @throws BaiException
      */
-    public static function load($tplName, $param = array(), $ext = 'php') {
+    public static function load($tplName, $param = array(), $ext = 'php')
+    {
         if (!is_array($param)) {
             throw new BaiException(Errcode::$paramViewTypeError);
         }
@@ -62,7 +65,8 @@ class View {
      * @param type $fileName css文件名
      * echo string
      */
-    public static function loadCss($fileName) {
+    public static function loadCss($fileName)
+    {
         echo self::getInstance()->loadAssetsFile($fileName, 'css');
     }
 
@@ -72,7 +76,8 @@ class View {
      * @param type $fileName js文件名
      * echo string
      */
-    public static function loadJs($fileName) {
+    public static function loadJs($fileName)
+    {
         echo self::getInstance()->loadAssetsFile($fileName, 'js');
     }
 
@@ -82,7 +87,8 @@ class View {
      * @param type $fileName 文件名带后缀
      * echo string
      */
-    public static function loadAssets($fileName) {
+    public static function loadAssets($fileName)
+    {
         echo self::getInstance()->loadAssetsFile($fileName);
     }
 
@@ -94,7 +100,8 @@ class View {
      * @return string
      * @throws BaiException
      */
-    private function loadAssetsFile($fileName, $ext = '') {
+    private function loadAssetsFile($fileName, $ext = '')
+    {
         is_array($fileName) or $fileName = array($fileName);
         $html = '';
         foreach ($fileName as $fileNameVal) {
@@ -102,22 +109,22 @@ class View {
                 $html .= $this->loadUrl($fileNameVal);
             } else {
                 if ($ext) {
-                    $fileNameVal = $ext . DIRECTORY_SEPARATOR . $fileNameVal;
+                    $fileNameVal = $ext . '/' . $fileNameVal;
                 }
-                $file_path = Config::getInstance()->getAssetsDir() . DIRECTORY_SEPARATOR . $fileNameVal . ($ext ? '.' . $ext : '');
+                $file_path = Config::getInstance()->getAssetsDir() . '/' . $fileNameVal . ($ext ? '.' . $ext : '');
                 $local_path = WEB_PATH . $file_path;
                 if (file_exists($local_path)) {
                     switch ($ext) {
                         case 'css':
                         case 'CSS':
-                            $html.= '<link href="' . UrlPath::baseUrl($file_path) . '" rel="stylesheet" type="text/css" />';
+                            $html .= '<link href="' . UrlPath::baseUrl($file_path) . '" rel="stylesheet" type="text/css" />';
                             break;
                         case 'js':
                         case 'JS':
-                            $html.= '<script type="text/javascript" src="' . UrlPath::baseUrl($file_path) . '"></script>';
+                            $html .= '<script type="text/javascript" src="' . UrlPath::baseUrl($file_path) . '"></script>';
                             break;
                         default:
-                            $html.= UrlPath::baseUrl($file_path);
+                            $html .= UrlPath::baseUrl($file_path);
                             break;
                     }
                 } else {
@@ -134,20 +141,21 @@ class View {
      * @param type $url
      * @return type
      */
-    private function loadUrl($url) {
+    private function loadUrl($url)
+    {
         $last_str = substr($url, -3);
         $html = '';
         switch ($last_str) {
             case 'css':
             case 'CSS':
-                $html.= '<link href="' . $url . '" rel="stylesheet" type="text/css" />';
+                $html .= '<link href="' . $url . '" rel="stylesheet" type="text/css" />';
                 break;
             case '.js':
             case '.JS':
-                $html.= '<script type="text/javascript" src="' . $url . '"></script>';
+                $html .= '<script type="text/javascript" src="' . $url . '"></script>';
                 break;
             default:
-                $html.= $url;
+                $html .= $url;
                 break;
         }
         return $html ? $html : false;
