@@ -32,7 +32,7 @@
  *      |- controller/     控制器文件目录
  *          |- data/       缓存数据和日志文件目录
  *      |- libs/           类库文件目录
- *          |- middle/     中间件类库目录
+ *      |- middle/         中间件类库目录
  *      |- model/          数据模型文件目录
  *      |- tools/          工具类文件目录
  *      |- view/           视图文件目录
@@ -61,7 +61,7 @@
  * 为规范数据默认存放目录为 /libs/middle 您也可以添加任何一个类库到中间件容器中
  * 
  * 添加方法为：
- *      Core::addMiddleClass('\\baike\libs\middle\RequestLog', 'record');
+ *      Core::addMiddleClass('\\baike\middleware\RequestLog', 'record');
  *      可以根据自己需要添加系统内任何类库的及公共方法，支持静态方法和常规方法
  * 
  */
@@ -92,7 +92,7 @@ require dirname(__FILE__) . DIRECTORY_SEPARATOR . 'Route.php';
 /**
  * 添加中间件，支持多次添加
  */
-Core::addMiddleClass('\\baike\libs\middle\RequestLog', 'record');
+Core::addMiddleClass('\\baike\middleware\RequestLog', 'record');
 /**
  * 初始化系统
  */

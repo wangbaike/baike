@@ -2,19 +2,21 @@
 
 namespace baike\libs\database;
 
-use baike\libs\BaiException;
+use baike\libs\DBException;
+use baike\tools\Log;
 
 /**
  * Description of mysqldbclass
  *
  * url www.phpleyuan.com
  * email wangbaike168@qq.com
- * time 2013-3-17 16:16:03
+ * time 2018-05-05 08:20:03
  * project PMS
  * encoding UTF-8
  * @author wbk
  * */
-class MysqliDB {
+class MysqliDB
+{
 
     public $host = 'localhost';
     public $port = 3306;
@@ -22,9 +24,11 @@ class MysqliDB {
     public $pwd = '';
     public $dbName;
     public $charset = 'utf8';
+    public $sqlLog = 0; //是否开启sql日志， 0-不开启，1-开启
     private $dbConn = null;
 
-    function __construct($host, $port, $user, $pwd, $dbName, $charset) {
+    function __construct($host, $port, $user, $pwd, $dbName, $charset)
+    {
         $this->host = $host;
         $this->port = $port;
         $this->user = $user;
@@ -39,12 +43,15 @@ class MysqliDB {
      *
      * @return resource
      */
-    function connect() {
-        $this->dbConn = mysqli_connect($this->host, $this->user, $this->pwd, $this->dbName, $this->port);
-        if (!$this->dbConn) {
-            throw new BaiException(__CLASS__ . ':error to connect mysql server' . mysqli_error($this->dbConn));
+    function connect()
+    {
+        if (null === $this->dbConn) {
+            $this->dbConn = new \mysqli($this->host, $this->user, $this->pwd, $this->dbName, $this->port);
+            if ($this->dbConn->connect_errno) {
+                throw new DBException(__CLASS__ . ':error to connect mysql server' . $this->dbConn->connect_errno);
+            }
+            $this->query("SET NAMES " . $this->charset);
         }
-        $this->dbConn->query("SET NAMES " . $this->charset);
         return $this->dbConn;
     }
 
@@ -55,7 +62,11 @@ class MysqliDB {
      * @param string $sql SQL语句
      * @return bool
      */
-    function query($sql) {
+    function query($sql)
+    {
+        if ($this->sqlLog) {
+            Log::add($sql, Log::$NORMAL, 'dbSQL');
+        }
         return $this->dbConn->query($sql);
     }
 
@@ -68,9 +79,10 @@ class MysqliDB {
      * @param string $table 表名称
      * @return array | false
      */
-    function selectCell($filed, $where, $table) {
-        $resoult = $this->query("select " . $filed . " from " . $table . $this->getWhereStr($where) . " limit 1");
-        $info = mysql_fetch_assoc($resoult);
+    function selectCell($filed, $where, $table)
+    {
+        $resoult = $this->query("SELECT " . $filed . " FROM " . $table . $this->getWhereStr($where) . " LIMIT 1");
+        $info = $resoult->fetch_assoc();
         return isset($info[$filed]) ? $info[$filed] : false;
     }
 
@@ -86,17 +98,18 @@ class MysqliDB {
      * @param string $table 表名称
      * @return array | false
      */
-    function selectRow($filed = '*', $where = array(), $group = '', $order = '', $asc = 'asc', $table = '') {
-        $sql = "select " . $filed . " from " . $table . $this->getWhereStr($where);
+    function selectRow($filed = '*', $where = array(), $group = '', $order = '', $asc = 'ASC', $table = '')
+    {
+        $sql = "SELECT " . $filed . " FROM " . $table . $this->getWhereStr($where);
         if ($group != '') {
-            $sql .= ' group by ' . $group;
+            $sql .= ' GROUP BY ' . $group;
         }
         if ($order != '') {
-            $sql .= ' order by ' . $order . ' ' . $asc;
+            $sql .= ' ORDER BY ' . $order . ' ' . $asc;
         }
-        $sql .= ' limit 1';
+        $sql .= ' LIMIT 1';
         $resoult = $this->query($sql);
-        return mysql_fetch_assoc($resoult);
+        return $resoult->fetch_assoc();
     }
 
     /**
@@ -113,20 +126,21 @@ class MysqliDB {
      * @param string $table 表名称
      * @return array | false
      */
-    function selectAllRow($filed = '*', $where = array(), $group = '', $order = '', $asc = 'asc', $start = '0', $offset = '15', $table = '') {
-        $sql = "select " . $filed . " from " . $table . $this->getWhereStr($where);
+    function selectAllRow($filed = '*', $where = array(), $group = '', $order = '', $asc = 'ASC', $start = '0', $offset = '15', $table = '')
+    {
+        $sql = "SELECT " . $filed . " FROM " . $table . $this->getWhereStr($where);
         if ($group != '') {
-            $sql .= ' group by ' . $group;
+            $sql .= ' GROUP BY ' . $group;
         }
         if ($order != '') {
-            $sql .= ' order by ' . $order . ' ' . $asc;
+            $sql .= ' ORDER BY ' . $order . ' ' . $asc;
         }
         if ($start != '0' || $offset != '0') {
-            $sql .= ' limit ' . $start . ',' . $offset;
+            $sql .= ' LIMIT ' . $start . ',' . $offset;
         }
         $resoult = $this->query($sql);
         $arr = array();
-        while ($info = mysql_fetch_assoc($resoult)) {
+        while ($info = $resoult->fetch_assoc()) {
             $arr[] = $info;
         }
         return $arr;
@@ -142,8 +156,9 @@ class MysqliDB {
      * @param string $all 为真测删除全部符合条件的，为假则删除一条
      * @return bool
      */
-    function delete($where, $table, $all = false) {
-        return $this->query("delete from " . $table . $this->getWhereStr($where) . ($all ? '' : " limit 1"));
+    function delete($where, $table, $all = false)
+    {
+        return $this->query("DELETE FROM " . $table . $this->getWhereStr($where) . ($all ? '' : " LIMIT 1"));
     }
 
     /**
@@ -156,12 +171,13 @@ class MysqliDB {
      * @param array $where 查询条件 格式为array("index"=>'value')
      * @return bool
      */
-    function update($item, $table, $where) {
+    function update($item, $table, $where)
+    {
         $data = array();
         foreach ($item as $key1 => $val1) {
             $data[] = $key1 . "=" . $val1;
         }
-        return $this->query("update " . $table . " set " . implode(",", $data) . $this->getWhereStr($where));
+        return $this->query("UPDATE " . $table . " SET " . implode(",", $data) . $this->getWhereStr($where));
     }
 
     /**
@@ -172,7 +188,8 @@ class MysqliDB {
      * @param string $table 表名称
      * @return bool
      */
-    function insert($item, $table) {
+    function insert($item, $table)
+    {
         $field_arr = array();
         $value_arr = array();
         foreach ($item as $key => $val) {
@@ -181,7 +198,7 @@ class MysqliDB {
         }
         $result = $this->query("INSERT INTO `" . $table . "`(" . implode(' ,', $field_arr) . ") VALUES(" . implode(' ,', $value_arr) . ")");
         if ($result) {
-            return mysql_insert_id();
+            return $this->dbConn->insert_id;
         } else {
             return false;
         }
@@ -194,7 +211,8 @@ class MysqliDB {
      * @param array $where 查询条件 格式为array("index"=>'value')
      * @return string 查询条件字符串
      */
-    private function getWhereStr($where) {
+    private function getWhereStr($where)
+    {
         $data_arr = array();
         $whereString = '';
         if (count($where)) {
@@ -209,7 +227,7 @@ class MysqliDB {
                     }
                 }
             }
-            $whereString = " where " . implode(" and ", $data_arr);
+            $whereString = " WHERE " . implode(" AND ", $data_arr);
         }
         return $whereString;
     }
@@ -222,7 +240,8 @@ class MysqliDB {
      * @param	string
      * @return	mixed
      */
-    private function escape($str) {
+    private function escape($str)
+    {
         if (is_string($str)) {
             $str = "'" . $str . "'";
         } elseif (is_bool($str)) {
@@ -236,12 +255,13 @@ class MysqliDB {
     /**
      * 关闭数据库连接
      */
-    function close($conn = '') {
-        if ($conn != '') {
-            mysql_close($conn);
-        } else {
-            mysql_close($this->dbConn);
-        }
+    function close($conn = '')
+    {
+//        if ($conn != '') {
+//            $this->dbConn->;
+//        } else {
+//            mysql_close();
+//        }
     }
 
 }

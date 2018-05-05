@@ -3,7 +3,6 @@
 namespace baike\model;
 
 use baike\libs\database\DBLoader;
-use baike\tools\InputParam;
 
 /**
  * Description of modelclass
@@ -15,18 +14,16 @@ use baike\tools\InputParam;
  * encoding UTF-8
  * @author wbk
  * */
-class DataModel extends DBLoader {
+class DataModel extends DBLoader
+{
 
     private $conn = null;
     private $table;
     private static $instanceCache = array();
 
     //构造函数
-    public function __construct($tableName, $dbIndex = 2) {
-        //自动连接bae数据库
-        if ('bae' == InputParam::server('USER')) {
-            $dbIndex = 1;
-        }
+    public function __construct($tableName, $dbIndex = 0)
+    {
         $this->conn = parent::__construct($dbIndex);
         $this->table = self::$dbprev . $tableName; //加上数据表前缀
     }
@@ -36,9 +33,10 @@ class DataModel extends DBLoader {
      * @param type $tableName
      * @return type
      */
-    public static function getInstance($tableName) {
+    public static function getInstance($tableName)
+    {
         if (!isset(self::$instanceCache[$tableName])) {
-            self::$instanceCache[$tableName] = new DataModel($tableName);
+            self::$instanceCache[$tableName] = new self($tableName);
         }
         return self::$instanceCache[$tableName];
     }
@@ -51,7 +49,8 @@ class DataModel extends DBLoader {
      * @param array $where 查询条件 格式为array("index"=>'value')
      * @return array | false
      */
-    function dbSelectCell($filed, $where = array()) {
+    function dbSelectCell($filed, $where = array())
+    {
         return $this->conn->selectCell($filed, $where, $this->table);
     }
 
@@ -66,7 +65,8 @@ class DataModel extends DBLoader {
      * @param string $asc 排序条件 默认为正序排列asc
      * @return array | false
      */
-    function dbSelectRow($filed = '*', $where = array(), $group = '', $order = '', $asc = 'asc') {
+    function dbSelectRow($filed = '*', $where = array(), $group = '', $order = '', $asc = 'asc')
+    {
         return $this->conn->selectRow($filed, $where, $group, $order, $asc, $this->table);
     }
 
@@ -83,7 +83,8 @@ class DataModel extends DBLoader {
      * @param int $offset 每次查询的个数
      * @return array | false
      */
-    function dbSelectAllRow($filed = '*', $where = array(), $group = '', $order = '', $asc = 'asc', $start = '0', $offset = '0') {
+    function dbSelectAllRow($filed = '*', $where = array(), $group = '', $order = '', $asc = 'asc', $start = '0', $offset = '0')
+    {
         return $this->conn->selectAllRow($filed, $where, $group, $order, $asc, $start, $offset, $this->table);
     }
 
@@ -96,7 +97,8 @@ class DataModel extends DBLoader {
      * @param string $all 为真测删除全部符合条件的，为假则删除一条
      * @return bool
      */
-    function dbDelete($where, $all = false) {
+    function dbDelete($where, $all = false)
+    {
         return $this->conn->delete($where, $this->table, $all);
     }
 
@@ -109,7 +111,8 @@ class DataModel extends DBLoader {
      * @param array $where 查询条件 格式为array("index"=>'value')
      * @return bool
      */
-    function dbUpdate($item, $where) {
+    function dbUpdate($item, $where)
+    {
         return $this->conn->update($item, $this->table, $where);
     }
 
@@ -120,7 +123,8 @@ class DataModel extends DBLoader {
      * @param array $item 值的格式 格式为array("index"=>'value')
      * @return bool
      */
-    function dbInsert($item) {
+    function dbInsert($item)
+    {
         return $this->conn->insert($item, $this->table);
     }
 
@@ -131,14 +135,16 @@ class DataModel extends DBLoader {
      * @param string $sql SQL语句
      * @return bool
      */
-    function dbQuery($sql) {
+    function dbQuery($sql)
+    {
         return $this->conn->query($sql);
     }
 
     /**
      * 关闭数据库连接
      */
-    function dbClose() {
+    function dbClose()
+    {
         return $this->conn->close($this->conn);
     }
 

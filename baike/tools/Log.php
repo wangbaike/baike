@@ -46,7 +46,11 @@ class Log
      */
     public static function add($msg, $level = 0, $logFile = 'logs')
     {
-        $filePath = APP_PATH . 'data' . DIRECTORY_SEPARATOR . 'log' . DIRECTORY_SEPARATOR . $logFile . '_' . date('Ymd') . '.log';
+        $dirPath = APP_PATH . 'data' . DIRECTORY_SEPARATOR . 'log' . DIRECTORY_SEPARATOR . date('Ymd');
+        if (!is_dir($dirPath)) {
+            mkdir($dirPath);
+        }
+        $filePath = $dirPath . DIRECTORY_SEPARATOR . $logFile . '.log';
         $prevStr = '';
         switch ($level) {
             case self::$ERROR:

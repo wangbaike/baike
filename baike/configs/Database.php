@@ -13,9 +13,11 @@ namespace baike\configs;
  *
  * @author wbk
  */
-class Database {
+class Database
+{
 
-    public static function getDBs() {
+    public static function getDBs()
+    {
         //本地测试数据库
         $dbIndex = 0;
         $database = array();
@@ -26,26 +28,7 @@ class Database {
         $database[$dbIndex]['dbPwd'] = 'root';
         $database[$dbIndex]['dbCharset'] = 'utf8';
         $database[$dbIndex]['dbPrev'] = 'bk_';
-
-        //百度云数据库
-        $dbIndex++;
-        $database[$dbIndex]['dbHost'] = 'sqld.duapp.com';
-        $database[$dbIndex]['dbPort'] = 4050;
-        $database[$dbIndex]['dbName'] = 'XJVfFeCawfOCxGqXJYUs';
-        $database[$dbIndex]['dbUser'] = '8204d3c2ad144bf89c1ad2326271b31f';
-        $database[$dbIndex]['dbPwd'] = '91f642a0cff440b3b947c3373dff5f69';
-        $database[$dbIndex]['dbCharset'] = 'utf8';
-        $database[$dbIndex]['dbPrev'] = 'bk_';
-
-        //本地数据库
-        $dbIndex ++;
-        $database[$dbIndex]['dbHost'] = 'localhost';
-        $database[$dbIndex]['dbPort'] = 3306;
-        $database[$dbIndex]['dbName'] = 'tongji';
-        $database[$dbIndex]['dbUser'] = 'root';
-        $database[$dbIndex]['dbPwd'] = 'root';
-        $database[$dbIndex]['dbCharset'] = 'utf8';
-        $database[$dbIndex]['dbPrev'] = '';
+        $database[$dbIndex]['sqlLog'] = 1; //记录sql日志 0-不记录，1-记录
         return $database;
     }
 

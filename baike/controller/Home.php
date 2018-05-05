@@ -8,8 +8,8 @@
 
 namespace baike\controller;
 
-use baike\tools\InputParam;
 use baike\tools\View;
+use baike\model\DataModel;
 
 /**
  * Description of Home
@@ -21,6 +21,12 @@ class Home
 
     public function index()
     {
+        /**
+         * 调用数据库
+         * 渲染模板
+         */
+        //$list = DataModel::getInstance('fun')->dbSelectAllRow();
+        // print_r($list);
         View::load('home');
     }
 

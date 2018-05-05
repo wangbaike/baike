@@ -1,6 +1,6 @@
 <?php
 
-namespace baike\libs\middle;
+namespace baike\middleware;
 
 /**
  * This Tpl designed by wbk
@@ -19,7 +19,7 @@ use baike\tools\InputParam;
 /**
  * Description of RequestLog
  */
-class RequestLog
+class RequestLog extends Middleware
 {
 
     public static function record()
