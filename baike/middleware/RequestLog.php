@@ -13,8 +13,8 @@ namespace baike\middleware;
  * @link		http://www.baikeshuo.cn
  * @datetime          2018-5-1 19:21:24
  */
-use baike\tools\Log;
-use baike\tools\InputParam;
+use baike\framework\tools\Log;
+use baike\framework\tools\InputParam;
 
 /**
  * Description of RequestLog

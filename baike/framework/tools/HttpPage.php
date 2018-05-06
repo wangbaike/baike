@@ -12,9 +12,9 @@
  * @datetime          2018-5-1 16:40:02
  */
 
-namespace baike\tools;
+namespace baike\framework\tools;
 
-use baike\tools\View;
+use baike\framework\tools\View;
 
 /**
  * Description of HttpPage

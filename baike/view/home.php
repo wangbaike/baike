@@ -1,6 +1,6 @@
 <?php
 
-use baike\tools\View;
+use baike\framework\tools\View;
 
 /**
  * This Tpl designed by wbk

@@ -1,10 +1,12 @@
 <?php
 
-use baike\tools\InputParam; //全局输入加载
-use baike\libs\BaiException; //加载异常类
-use baike\tools\HttpPage; //http错误页面
-use baike\Core;
-use baike\tools\Log;
+namespace baike\framework;
+
+use baike\framework\tools\InputParam; //全局输入加载
+use baike\framework\exception\BaiException; //加载异常类
+use baike\framework\tools\HttpPage; //http错误页面
+use baike\framework\Core;
+use baike\framework\tools\Log;
 
 /**
  * 系统路由
@@ -50,12 +52,12 @@ class Route
      */
     private static function invokeClass($classPath, $method)
     {
-        $obj = new ReflectionClass($classPath);
+        $obj = new \ReflectionClass($classPath);
         if ($obj->hasMethod($method)) {
             //程序执行之前加载中间件
             Core::runMiddleClass();
             //执行要执行的类库
-            $instance = new ReflectionMethod($classPath, $method);
+            $instance = new \ReflectionMethod($classPath, $method);
             $instance->invoke(new $classPath());
         } else {
             HttpPage::show_404();

@@ -5,13 +5,13 @@
  * 
  * 
  * 创建于2018-04-26
- * 
+ * 所有的文件加载请在命名空间下面用 use加载，禁止在程序中使用 \ 开头的加载调用方式！
  * 
  * 【程序执行流程】
  * 
  * WEB程序执行流程：入口文件index.php ->路由解析 ->加载对应控制器 ->调用数据 ->调用视图 ->输出结果。
  * 脚本执行流程：/use/bin/php 命令执行 cli.php ->解析argv 参数获取要执行的类库路径，把其它参数写入到GET变量中 ->加载对应类库 ->执行程序。
- * 脚本的执行方式为 /usr/bin/php cli.php worker/PHPtest/main 其中worker/PHPtest为脚本类名称 run为要执行的指定方法。
+ * 脚本的执行方式为 /usr/bin/php cli.php worker/PHPtest/run 其中worker/PHPtest为脚本类名称 run为要执行的指定方法。
  * 
  * 【目录结构】
  * 
@@ -66,7 +66,7 @@
  * 
  */
 
-use \baike\Core;
+use baike\framework\Core;
 
 header("Content-type: text/html; charset=utf-8");
 /**
@@ -84,11 +84,7 @@ define('APP_PATH', dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'baike' . 
 /**
  * 加载全局脚本
  */
-require APP_PATH . DIRECTORY_SEPARATOR . 'bootstrap.php';
-/**
- * 加载路由
- */
-require dirname(__FILE__) . DIRECTORY_SEPARATOR . 'Route.php';
+require APP_PATH . DIRECTORY_SEPARATOR . 'framework' . DIRECTORY_SEPARATOR . 'bootstrap.php';
 /**
  * 添加中间件，支持多次添加
  */
@@ -96,7 +92,7 @@ Core::addMiddleClass('\\baike\middleware\RequestLog', 'record');
 /**
  * 初始化系统
  */
-Route::main();
+Core::run();
 
 
 

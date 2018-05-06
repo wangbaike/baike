@@ -1,8 +1,8 @@
 <?php
 
-namespace baike\model;
+namespace baike\framework\model;
 
-use baike\libs\database\DBLoader;
+use baike\framework\libs\database\DBLoader;
 
 /**
  * Description of modelclass
@@ -16,30 +16,6 @@ use baike\libs\database\DBLoader;
  * */
 class DataModel extends DBLoader
 {
-
-    private $conn = null;
-    private $table;
-    private static $instanceCache = array();
-
-    //构造函数
-    public function __construct($tableName, $dbIndex = 0)
-    {
-        $this->conn = parent::__construct($dbIndex);
-        $this->table = self::$dbprev . $tableName; //加上数据表前缀
-    }
-
-    /**
-     * 实例化工厂
-     * @param type $tableName
-     * @return type
-     */
-    public static function getInstance($tableName)
-    {
-        if (!isset(self::$instanceCache[$tableName])) {
-            self::$instanceCache[$tableName] = new self($tableName);
-        }
-        return self::$instanceCache[$tableName];
-    }
 
     /**
      * 查询表中的单个字段
@@ -147,5 +123,41 @@ class DataModel extends DBLoader
     {
         return $this->conn->close($this->conn);
     }
+
+    //构造函数
+    function __construct($dbIndex = 0)
+    {
+        if (null === $this->conn) {
+            $this->conn = parent::__construct($dbIndex);
+        }
+    }
+
+    /**
+     * 设置要操作的表
+     * @param string $tableName
+     */
+    public function setTable($tableName)
+    {
+        $this->table = $this->dbprev . $tableName; //加上数据表前缀
+    }
+
+    /**
+     * 实例化工厂
+     * @param string $tableName 表名称
+     * @param int $dbIndex 数据库的编号，在数据库配置文件中可以查看索引编号
+     * @return type
+     */
+    public static function getInstance($tableName, $dbIndex = 0)
+    {
+        if (null === self::$instance) {
+            self::$instance = new self($dbIndex);
+        }
+        self::$instance->setTable($tableName);
+        return self::$instance;
+    }
+
+    private $conn = null;
+    private $table;
+    private static $instance = null;
 
 }

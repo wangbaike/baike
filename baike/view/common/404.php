@@ -20,6 +20,6 @@
         <meta name="keywords" content="" />
         <meta name="description" content="" />
     </head>
-    <body>404 请求的页面不存在！</body>
+    <body>【404】请求的页面不存在！</body>
 </html>
 

@@ -29,6 +29,27 @@ class Database
         $database[$dbIndex]['dbCharset'] = 'utf8';
         $database[$dbIndex]['dbPrev'] = 'bk_';
         $database[$dbIndex]['sqlLog'] = 1; //记录sql日志 0-不记录，1-记录
+        //return $database;
+
+        $dbIndex ++;
+        $database[$dbIndex]['dbHost'] = 'localhost';
+        $database[$dbIndex]['dbPort'] = 3306;
+        $database[$dbIndex]['dbName'] = 'baikedoc';
+        $database[$dbIndex]['dbUser'] = 'root';
+        $database[$dbIndex]['dbPwd'] = 'root';
+        $database[$dbIndex]['dbCharset'] = 'utf8';
+        $database[$dbIndex]['dbPrev'] = '';
+        $database[$dbIndex]['sqlLog'] = 1; //记录sql日志 0-不记录，1-记录
+        
+         $dbIndex ++;
+        $database[$dbIndex]['dbHost'] = 'localhost';
+        $database[$dbIndex]['dbPort'] = 3306;
+        $database[$dbIndex]['dbName'] = 'hc_sharetravel';
+        $database[$dbIndex]['dbUser'] = 'root';
+        $database[$dbIndex]['dbPwd'] = 'root';
+        $database[$dbIndex]['dbCharset'] = 'utf8';
+        $database[$dbIndex]['dbPrev'] = 'ta_';
+        $database[$dbIndex]['sqlLog'] = 1; //记录sql日志 0-不记录，1-记录
         return $database;
     }
 

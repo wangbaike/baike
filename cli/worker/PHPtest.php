@@ -2,7 +2,7 @@
 
 namespace cli\worker;
 
-use baike\tools\InputParam;
+use baike\framework\tools\InputParam;
 
 /**
  * This Tpl designed by wbk

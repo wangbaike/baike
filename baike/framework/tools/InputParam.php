@@ -12,7 +12,7 @@
  * @datetime          2017-12-22 12:47:17
  */
 
-namespace baike\tools;
+namespace baike\framework\tools;
 
 class InputParam
 {

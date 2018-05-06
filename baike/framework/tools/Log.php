@@ -12,7 +12,7 @@
  * @datetime          2018-5-1 17:28:01
  */
 
-namespace baike\tools;
+namespace baike\framework\tools;
 
 /**
  * Description of Log

@@ -12,12 +12,12 @@
  * @datetime          2018-2-2 11:16:37
  */
 
-namespace baike\tools;
+namespace baike\framework\tools;
 
 use baike\configs\Config; //加载配置文件
-use baike\configs\Errcode; //加载异常代码库
-use baike\libs\BaiException; //加载异常类
-use baike\tools\UrlPath; //加载路径
+use baike\framework\exception\Errcode; //加载异常代码库
+use baike\framework\exception\BaiException; //加载异常类
+use baike\framework\tools\UrlPath; //加载路径
 
 class View
 {

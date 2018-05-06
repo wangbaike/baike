@@ -12,10 +12,10 @@
  * @datetime          2018-2-5 13:12:17
  */
 
-namespace baike\tools;
+namespace baike\framework\tools;
 
-use baike\configs\Errcode; //加载异常代码库
-use baike\libs\BaiException; //加载异常类
+use baike\framework\exception\Errcode; //加载异常代码库
+use baike\framework\exception\BaiException; //加载异常类
 
 class OutputParam
 {

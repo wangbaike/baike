@@ -12,7 +12,7 @@
  * @datetime          2018-1-3 21:43:39
  */
 
-namespace baike\tools;
+namespace baike\framework\tools;
 
 /**
  * Description of Functions

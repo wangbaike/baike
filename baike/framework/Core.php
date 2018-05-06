@@ -1,8 +1,9 @@
 <?php
 
-namespace baike;
+namespace baike\framework;
 
-use baike\tools\Log;
+use baike\framework\tools\Log;
+use baike\framework\Route;
 
 /**
  * Description of Core
@@ -11,6 +12,14 @@ use baike\tools\Log;
  */
 class Core
 {
+
+    /**
+     * WEB端初始化操作，加载路由
+     */
+    public static function run()
+    {
+        Route::main();
+    }
 
     /**
      * 添加中间件类库

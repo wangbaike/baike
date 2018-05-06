@@ -6,21 +6,20 @@
  * and open the template in the editor.
  */
 
-namespace baike\libs;
-
-use baike\configs\Errcode; //加载错误代码库
+namespace baike\framework\exception;
 
 /**
  * Description of exception
  *
  * @author Administrator
  */
-
-class BaiException extends \Exception {
+class BaiException extends \Exception
+{
 
     private $details = array();
 
-    function __construct($details) {
+    function __construct($details)
+    {
         if (is_array($details)) {
             $message = $details['code'] . ': ' . $details['message'];
             parent::__construct($message);
@@ -31,19 +30,23 @@ class BaiException extends \Exception {
         }
     }
 
-    public function getHTTPStatus() {
+    public function getHTTPStatus()
+    {
         return isset($this->details['status']) ? $this->details['status'] : '';
     }
 
-    public function getErrorCode() {
+    public function getErrorCode()
+    {
         return isset($this->details['code']) ? $this->details['code'] : '';
     }
 
-    public function getErrorMessage() {
+    public function getErrorMessage()
+    {
         return isset($this->details['message']) ? $this->details['message'] : '';
     }
 
-    public function getDetails() {
+    public function getDetails()
+    {
         return isset($this->details['body']) ? $this->details['body'] : '';
     }
 

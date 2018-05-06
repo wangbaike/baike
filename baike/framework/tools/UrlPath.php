@@ -12,15 +12,16 @@
  * @datetime          2018-1-3 20:59:35
  */
 
-namespace baike\tools;
+namespace baike\framework\tools;
 
-use baike\tools\InputParam;
+use baike\framework\tools\InputParam;
 use baike\configs\Config;
 
 /**
  * Description of UrlPath
  */
-class UrlPath {
+class UrlPath
+{
 
     /**
      * 访问网址
@@ -28,7 +29,8 @@ class UrlPath {
      * @param string $urlParam 网址参数
      * @return string
      */
-    public static function siteUrl($urlParam = '') {
+    public static function siteUrl($urlParam = '')
+    {
         return self::baseUrl(Config::getInstance()->getIndexPage() . ($urlParam ? '/' . $urlParam : ''));
     }
 
@@ -38,7 +40,8 @@ class UrlPath {
      * @param string $urlParam 地址参数
      * @return string
      */
-    public static function baseUrl($urlParam = '') {
+    public static function baseUrl($urlParam = '')
+    {
         $server = InputParam::server();
         $http = $server['SERVER_PORT'] == '443' ? 'https://' : 'http://';
         return $http . $server['HTTP_HOST'] . str_ireplace(Config::getInstance()->getIndexPage(), '', $server['SCRIPT_NAME']) . $urlParam;

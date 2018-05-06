@@ -6,12 +6,13 @@
  * and open the template in the editor.
  */
 
-namespace baike\tools;
+namespace baike\framework\tools;
 
-use baike\libs\BaiException;
-use baike\tools\InputParam;
+use baike\framework\exception\BaiException;
+use baike\framework\tools\InputParam;
 
-class NetTools {
+class NetTools
+{
 
     /**
      * 建立http连接
@@ -23,7 +24,8 @@ class NetTools {
      * @return string
      * @throws BaiException
      */
-    public static function httpBuild($apiUrl = '', $getArr = array(), $postArr = array(), $header = array()) {
+    public static function httpBuild($apiUrl = '', $getArr = array(), $postArr = array(), $header = array())
+    {
         if ($apiUrl != '') {
             $server = InputParam::server();
             $getStr = is_array($getArr) && !empty($getArr) ? http_build_query($getArr) : '';
@@ -63,7 +65,8 @@ class NetTools {
      * @param array|string $data
      * @return bool|mixed
      */
-    public static function httpPost($url, $data) {
+    public static function httpPost($url, $data)
+    {
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_URL, $url);
         curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
@@ -82,7 +85,8 @@ class NetTools {
      * @param array $data
      * @return array
      */
-    static private function _buildPost(&$data) {
+    static private function _buildPost(&$data)
+    {
         if (is_array($data)) {
             foreach ($data as &$value) {
                 if (is_string($value) && $value[0] === '@' && class_exists('CURLFile', false)) {
@@ -102,7 +106,8 @@ class NetTools {
      * @return boolean
      * @throws BaiException
      */
-    public static function socketBuild($urlStr, $isResult = false) {
+    public static function socketBuild($urlStr, $isResult = false)
+    {
         $url = parse_url($urlStr);
         $query = '';
         if (isset($url['query'])) {
@@ -140,7 +145,8 @@ class NetTools {
      * @param type $urlStr
      * @return type
      */
-    public static function getBuild($urlStr) {
+    public static function getBuild($urlStr)
+    {
         return file_get_contents($urlStr);
     }
 

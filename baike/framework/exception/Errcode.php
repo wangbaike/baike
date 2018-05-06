@@ -12,7 +12,7 @@
  * @datetime          2018-2-5 10:06:37
  */
 
-namespace baike\configs;
+namespace baike\framework\exception;
 
 class Errcode
 {

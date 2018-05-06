@@ -1,9 +1,9 @@
 <?php
 
-namespace baike\libs\database;
+namespace baike\framework\libs\database;
 
-use baike\libs\DBException;
-use baike\tools\Log;
+use baike\framework\exception\DBException;
+use baike\framework\tools\Log;
 
 /**
  * Description of mysqldbclass
@@ -27,13 +27,12 @@ class MysqliDB
     public $sqlLog = 0; //是否开启sql日志， 0-不开启，1-开启
     private $dbConn = null;
 
-    function __construct($host, $port, $user, $pwd, $dbName, $charset)
+    function __construct($host, $port, $user, $pwd, $charset)
     {
         $this->host = $host;
         $this->port = $port;
         $this->user = $user;
         $this->pwd = $pwd;
-        $this->dbName = $dbName;
         $this->charset = $charset;
         return $this->connect();
     }
@@ -43,16 +42,39 @@ class MysqliDB
      *
      * @return resource
      */
-    function connect()
+    private function connect()
     {
         if (null === $this->dbConn) {
-            $this->dbConn = new \mysqli($this->host, $this->user, $this->pwd, $this->dbName, $this->port);
+            $this->dbConn = new \mysqli($this->host, $this->user, $this->pwd, '', $this->port);
             if ($this->dbConn->connect_errno) {
                 throw new DBException(__CLASS__ . ':error to connect mysql server' . $this->dbConn->connect_errno);
             }
-            $this->query("SET NAMES " . $this->charset);
+            $this->setCharset();
         }
         return $this->dbConn;
+    }
+
+    /**
+     * 选择数据库
+     * @throws DBException
+     */
+    public function selectDB($dbName)
+    {
+        $this->dbName = $dbName;
+        if (!$this->dbConn->select_db($this->dbName)) {
+            throw new DBException(__CLASS__ . ':error to connect database:' . $this->dbName . $this->dbConn->error);
+        }
+    }
+
+    /**
+     * 设置数据库编编码
+     * @throws DBException
+     */
+    public function setCharset()
+    {
+        if (!$this->dbConn->set_charset($this->charset)) {
+            throw new DBException(__CLASS__ . ':error to set charset on database:' . $this->dbName . $this->dbConn->error);
+        }
     }
 
     /**
@@ -62,7 +84,7 @@ class MysqliDB
      * @param string $sql SQL语句
      * @return bool
      */
-    function query($sql)
+    public function query($sql)
     {
         if ($this->sqlLog) {
             Log::add($sql, Log::$NORMAL, 'dbSQL');
@@ -79,7 +101,7 @@ class MysqliDB
      * @param string $table 表名称
      * @return array | false
      */
-    function selectCell($filed, $where, $table)
+    public function selectCell($filed, $where, $table)
     {
         $resoult = $this->query("SELECT " . $filed . " FROM " . $table . $this->getWhereStr($where) . " LIMIT 1");
         $info = $resoult->fetch_assoc();
@@ -98,7 +120,7 @@ class MysqliDB
      * @param string $table 表名称
      * @return array | false
      */
-    function selectRow($filed = '*', $where = array(), $group = '', $order = '', $asc = 'ASC', $table = '')
+    public function selectRow($filed = '*', $where = array(), $group = '', $order = '', $asc = 'ASC', $table = '')
     {
         $sql = "SELECT " . $filed . " FROM " . $table . $this->getWhereStr($where);
         if ($group != '') {
@@ -126,7 +148,7 @@ class MysqliDB
      * @param string $table 表名称
      * @return array | false
      */
-    function selectAllRow($filed = '*', $where = array(), $group = '', $order = '', $asc = 'ASC', $start = '0', $offset = '15', $table = '')
+    public function selectAllRow($filed = '*', $where = array(), $group = '', $order = '', $asc = 'ASC', $start = '0', $offset = '15', $table = '')
     {
         $sql = "SELECT " . $filed . " FROM " . $table . $this->getWhereStr($where);
         if ($group != '') {
@@ -140,8 +162,10 @@ class MysqliDB
         }
         $resoult = $this->query($sql);
         $arr = array();
-        while ($info = $resoult->fetch_assoc()) {
-            $arr[] = $info;
+        if ($resoult) {
+            while ($info = $resoult->fetch_assoc()) {
+                $arr[] = $info;
+            }
         }
         return $arr;
     }
@@ -156,7 +180,7 @@ class MysqliDB
      * @param string $all 为真测删除全部符合条件的，为假则删除一条
      * @return bool
      */
-    function delete($where, $table, $all = false)
+    public function delete($where, $table, $all = false)
     {
         return $this->query("DELETE FROM " . $table . $this->getWhereStr($where) . ($all ? '' : " LIMIT 1"));
     }
@@ -171,7 +195,7 @@ class MysqliDB
      * @param array $where 查询条件 格式为array("index"=>'value')
      * @return bool
      */
-    function update($item, $table, $where)
+    public function update($item, $table, $where)
     {
         $data = array();
         foreach ($item as $key1 => $val1) {
@@ -188,7 +212,7 @@ class MysqliDB
      * @param string $table 表名称
      * @return bool
      */
-    function insert($item, $table)
+    public function insert($item, $table)
     {
         $field_arr = array();
         $value_arr = array();
@@ -255,7 +279,7 @@ class MysqliDB
     /**
      * 关闭数据库连接
      */
-    function close($conn = '')
+    public function close($conn = '')
     {
 //        if ($conn != '') {
 //            $this->dbConn->;

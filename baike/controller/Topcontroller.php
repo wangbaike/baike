@@ -5,19 +5,19 @@
  *
  * contact me by email with wangbaike168@qq.com if you have any question, good luck with you !
  *
- * @filename           DBException.php
+ * @filename           Topcontroller.php
  * @package		Netbeans 8.0.2
  * @author		wbk
  * @link		http://www.baikeshuo.cn
- * @datetime          2018-5-5 8:20:10
+ * @datetime          2018-5-5 21:33:52
  */
 
-namespace baike\libs;
+namespace baike\controller;
 
 /**
- * Description of DBException
+ * Description of Topcontroller
  */
-class DBException extends \Exception
+class Topcontroller
 {
     //put your code here
 }

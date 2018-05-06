@@ -27,10 +27,10 @@ define('APP_PATH', dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'baike' . 
 /**
  * 加载全局脚本
  */
-require APP_PATH . DIRECTORY_SEPARATOR . 'bootstrap.php';
+require APP_PATH . 'framework' . DIRECTORY_SEPARATOR . 'bootstrap.php';
 
-use baike\libs\BaiException;
-use baike\configs\Errcode;
+use baike\framework\exception\BaiException;
+use baike\framework\exception\Errcode;
 
 try {
     //脚本参数检测
@@ -65,6 +65,8 @@ try {
     } else {
         throw new BaiException(Errcode::$methodNotFind);
     }
+} catch (BaiException $be) {
+    echo $be->getMessage();
 } catch (Exception $e) {
     echo $e->getMessage();
 }
