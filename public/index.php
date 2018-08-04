@@ -61,7 +61,11 @@
 
 use baike\framework\Core;
 
-header("Content-type: text/html; charset=utf-8");
+header("Content-type:text/html;charset=utf-8");
+/**
+ * 设置时区
+ */
+date_default_timezone_set('Asia/Shanghai');
 /**
  * 设置警告级别
  */

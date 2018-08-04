@@ -12,7 +12,7 @@
  * @datetime          2018-5-5 8:20:10
  */
 
-namespace baike\framework\exception;
+namespace baike\framework\libs\database;
 
 /**
  * Description of DBException

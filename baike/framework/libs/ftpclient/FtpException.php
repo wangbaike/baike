@@ -9,7 +9,7 @@
  *
  * @copyright Nicolas Tallefourtane http://nicolab.net
  */
-namespace vandor/FtpClient
+namespace baike\framework\libs\ftpclient;
 
 /**
  * The FtpException class.
