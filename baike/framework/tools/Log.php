@@ -39,6 +39,12 @@ class Log
     public static $NORMAL = 2;
 
     /**
+     * 框架级别错误
+     * @var type 
+     */
+    public static $FRAMEWORK_ERROR = 'framework_error';
+
+    /**
      * 添加日志记录
      * @param string $msg 日志信息
      * @param int $level 日志等级
@@ -63,9 +69,10 @@ class Log
                 $prevStr .= "[Normal]";
                 break;
             default:
+                $prevStr .= "[unknown]";
                 break;
         }
-        $prevStr .= date('Y-m-d H:i:s') . "\n";
+        $prevStr .= date('Y-m-d H:i:s') . "\t";
         $logString = '';
         if (is_array($msg) || is_object($msg)) {
             $logString = var_export($msg, true);

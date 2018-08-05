@@ -3,7 +3,7 @@
 namespace baike\framework;
 
 use baike\framework\tools\Log;
-use baike\framework\Route;
+use baike\configs\AutoLoad;
 
 /**
  * Description of Core
@@ -18,6 +18,9 @@ class Core
      */
     public static function run()
     {
+        //加载中间件配置
+        self::loadMiddleClass();
+        //执行路由
         Route::main();
     }
 
@@ -27,14 +30,21 @@ class Core
      * @param string $method 要执行的方法，支持对象的静态方法和常规方法
      * @return boolean
      */
-    public static function addMiddleClass($classPath, $method)
+    private static function loadMiddleClass()
     {
-        if (!isset(self::getInstance()->container['middleClass'])) {
-            self::getInstance()->container['middleClass'] = [];
+        if (false === self::get('middleClass')) {
+            self::set('middleClass', []);
         }
-        $sign = $classPath . '|' . $method;
-        if (!in_array($sign, self::getInstance()->container['middleClass'])) {
-            self::getInstance()->container['middleClass'][] = $sign;
+        $middleClass = self::get('middleClass');
+        $middleWares = AutoLoad::getInstance()->getMiddleWares();
+        if (!empty($middleWares)) {
+            foreach ($middleWares as $classPath => $method) {
+                $sign = $classPath . '|' . $method;
+                if (!in_array($sign, $middleClass)) {
+                    $middleClass[] = $sign;
+                }
+            }
+            self::set('middleClass', $middleClass);
         }
         return true;
     }
@@ -45,10 +55,10 @@ class Core
      */
     public static function runMiddleClass()
     {
-        if (!isset(self::getInstance()->container['middleClass'])) {
-            self::getInstance()->container['middleClass'] = [];
+        if (false === self::get('middleClass')) {
+            return false;
         } else {
-            foreach (self::getInstance()->container['middleClass'] as $classStr) {
+            foreach (self::get('middleClass') as $classStr) {
                 $classArr = explode('|', $classStr);
                 list($classPath, $method) = $classArr;
                 $obj = new \ReflectionClass($classPath);
@@ -56,10 +66,35 @@ class Core
                     $instance = new \ReflectionMethod($classPath, $method);
                     $instance->invoke(new $classPath());
                 } else {
-                    Log::add('找不到中间件的方法->' . $classStr, Log::$ERROR, 'middleClass');
+                    Log::add('找不到中间件的方法->' . $classStr, Log::$ERROR, Log::$FRAMEWORK_ERROR);
                 }
             }
         }
+    }
+
+    /**
+     * 往容器中添加东西
+     * @param string|int $index 索引值
+     * @param all $val 要放的数据
+     * @return boolean
+     */
+    public static function set($index, $val = '')
+    {
+        self::getInstance()->container[$index] = $val;
+        return true;
+    }
+
+    /**
+     * 从容器中取出东西
+     * @param string|int $index 索引值
+     * @return boolean|all
+     */
+    public static function get($index)
+    {
+        if (isset(self::getInstance()->container[$index])) {
+            return self::getInstance()->container[$index];
+        }
+        return false;
     }
 
     /**
