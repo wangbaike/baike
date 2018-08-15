@@ -2,6 +2,9 @@
 
 /**
  * This Tpl designed by wbk
+ * 脚本入口文件
+ * 执行流程：/use/bin/php 命令执行 cli.php ->解析argv 参数获取要执行的类库路径，把其它参数写入到GET变量中 ->加载对应类库 ->执行程序。
+ * 执行方式为 /usr/bin/php cli.php worker/PHPtest/run 其中worker/PHPtest为脚本类名称 run为要执行的指定方法。
  *
  * contact me by email with wangbaike168@qq.com if you have any question, good luck with you !
  *
