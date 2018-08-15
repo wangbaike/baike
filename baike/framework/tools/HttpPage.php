@@ -30,4 +30,12 @@ class HttpPage
         View::load('common/404');
     }
 
+    /**
+     * 500 page
+     */
+    public static function show_500()
+    {
+        exit('500 error');
+    }
+
 }

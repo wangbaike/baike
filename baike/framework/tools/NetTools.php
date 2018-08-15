@@ -52,6 +52,9 @@ class NetTools
             }
             $strRes = curl_exec($ch);
             curl_close($ch);
+            if ($strRes['curl_error']) {
+                throw new BaiException(__CLASS__ . ":curl error code " . $strRes['curl_error']);
+            }
             return $strRes;
         } else {
             throw new BaiException(__CLASS__ . ":api url is null");

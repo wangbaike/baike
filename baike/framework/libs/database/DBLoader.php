@@ -3,7 +3,6 @@
 namespace baike\framework\libs\database;
 
 use baike\configs\Database;
-use baike\framework\exception\DBException;
 
 /**
  * Description of factoryclass

@@ -20,26 +20,20 @@ header("Content-type: text/html; charset=utf-8");
  */
 error_reporting(E_ALL);
 /**
- * 定义前端路径
- */
-define('WEB_PATH', dirname(__FILE__) . DIRECTORY_SEPARATOR);
-/**
  * 定义程序目录
  */
 define('APP_PATH', dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'baike' . DIRECTORY_SEPARATOR);
 /**
  * 加载全局脚本
  */
-require APP_PATH . 'framework' . DIRECTORY_SEPARATOR . 'bootstrap.php';
+require APP_PATH . 'framework' . DIRECTORY_SEPARATOR . 'Bootstrap.php';
 
 use baike\framework\exception\BaiException;
 use baike\framework\exception\Errcode;
+use baike\framework\tools\Log;
 
 try {
     //脚本参数检测
-    if (!isset($argv[0])) {
-        throw new BaiException('not find cli.php');
-    }
     if (!isset($argv[1])) {
         throw new BaiException('not find class to run');
     }
@@ -68,9 +62,7 @@ try {
     } else {
         throw new BaiException(Errcode::$methodNotFind);
     }
-} catch (BaiException $be) {
-    echo $be->getMessage();
 } catch (Exception $e) {
-    echo $e->getMessage();
+    Log::add($e->getFile() . ' on line ' . $e->getLine() . ' -> ' . $e->getCode() . ':' . $e->getMessage(), Log::$ERROR, Log::$FRAMEWORK_ERROR);
 }
 

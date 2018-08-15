@@ -30,12 +30,12 @@ class Route
         try {
             self::init();
         } catch (BaiException $exc) {
-            Log::add($exc->getFile() . ' on line ' . $exc->getLine() . ' -> ' . $exc->getErrorCode() . ':' . $exc->getMessage(), Log::$NORMAL, 'route');
+            Log::add($exc->getFile() . ' on line ' . $exc->getLine() . ' -> ' . $exc->getErrorCode() . ':' . $exc->getMessage(), Log::$ERROR, Log::$FRAMEWORK_ERROR);
             header("Content-type: text/html; charset=utf-8");
             echo implode('<br/>', get_included_files());
             echo '<br/><br/>' . $exc->getMessage();
         } catch (\Exception $e) {
-            Log::add($e->getFile() . ' on line ' . $e->getLine() . ' -> ' . $e->getCode() . ':' . $e->getMessage(), Log::$NORMAL, 'route');
+            Log::add($e->getFile() . ' on line ' . $e->getLine() . ' -> ' . $e->getCode() . ':' . $e->getMessage(), Log::$ERROR, Log::$FRAMEWORK_ERROR);
             header("Content-type: text/html; charset=utf-8");
             echo implode('<br/>', get_included_files());
             echo '<br/><br/>' . $e->getMessage();
@@ -60,6 +60,7 @@ class Route
             $instance = new \ReflectionMethod($classPath, $method);
             $instance->invoke(new $classPath());
         } else {
+            Log::add('找不到执行方法->' . $classPath . '::' . $method, Log::$ERROR, Log::$FRAMEWORK_ERROR);
             HttpPage::show_404();
         }
     }
@@ -89,6 +90,7 @@ class Route
                     //设置GET参数
                     self::setGetParams($pathArr, $key);
                 } else {
+                    Log::add('找不到控制器->' . $controller, Log::$ERROR, Log::$FRAMEWORK_ERROR);
                     $basePath .= DIRECTORY_SEPARATOR . $param;
                 }
             }

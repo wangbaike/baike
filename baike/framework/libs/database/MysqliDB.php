@@ -2,7 +2,6 @@
 
 namespace baike\framework\libs\database;
 
-use baike\framework\exception\DBException;
 use baike\framework\tools\Log;
 
 /**

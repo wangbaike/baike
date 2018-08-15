@@ -24,7 +24,19 @@ class RequestLog extends Middleware
 
     public static function record()
     {
-        Log::add(InputParam::get(), Log::$NORMAL, 'requestLog');
+        $server = InputParam::server();
+        $msgArr = [];
+        //服务器端
+        $msgArr[] = $server['SERVER_PROTOCOL'];
+        $msgArr[] = $server['REQUEST_METHOD'];
+        $msgArr[] = $server['REQUEST_URI'];
+        $msgArr[] = $server['QUERY_STRING'];
+        $msgArr[] = (isset($server['SERVER_NAME']) ? $server['SERVER_NAME'] : $server['SERVER_ADDR']) . ':' . $server['SERVER_PORT'];
+        //客户端
+        $msgArr[] = $server['REMOTE_ADDR'] . ':' . $server['REMOTE_PORT'];
+        $msgArr[] = $server['HTTP_USER_AGENT'];
+        $msgArr[] = isset($server['HTTP_REFERER']) ? $server['HTTP_REFERER'] : '--';
+        Log::add(implode("\t", $msgArr), Log::$NORMAL, 'request_log');
     }
 
 }
