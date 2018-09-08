@@ -16,7 +16,7 @@ class Core
     /**
      * WEB端初始化操作，加载路由
      */
-    public static function run()
+    public static function webRun()
     {
         //加载中间件配置
         self::loadMiddleClass();

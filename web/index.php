@@ -94,7 +94,7 @@ require APP_PATH . DIRECTORY_SEPARATOR . 'framework' . DIRECTORY_SEPARATOR . 'Bo
 /**
  * 初始化系统
  */
-Core::run();
+Core::webRun();
 
 
 
